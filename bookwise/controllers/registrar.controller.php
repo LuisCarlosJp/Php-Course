@@ -1,14 +1,40 @@
 <?php
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $resultado = $database->query(
-        query: "insert into usuarios (nome,email,senha) values ( :nome, :email, :senha)",
+
+    $validacao = Validacao::validar([
+
+        'nome' => ['required'],
+        'email' => ['required', 'email', 'confirmed', 'unique:usuarios'],
+        'senha' => ['required', 'min:8', 'max:30', 'strong']
+
+    ], $_POST);
+
+    if ($validacao->naoPassou('registrar')) {
+
+        header("Location: /login");
+
+        exit();
+    }
+
+
+    $database->query(
+
+        query: "insert into usuarios (nome, email, senha) values (:nome, :email, :senha)",
+
         params: [
             'nome' => $_POST['nome'],
             'email' => $_POST['email'],
-            'senha' => $_POST['senha']
+            'senha' => password_hash($_POST['senha'], PASSWORD_DEFAULT)
         ]
+
     );
 
-    header('location: /login?mensagem=Registrado com sucesso!');
-}
+    flash()->push('mensagem', 'Registrado com sucesso');
+
+    header('location: /login');
+
+    exit();
+};
+
+header('location: /login');
+exit();
