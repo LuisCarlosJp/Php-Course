@@ -5,6 +5,8 @@ class livro
     public $titulo;
     public $autor;
     public $descricao;
-    public $ano_publicacao;
+    public $ano_de_publicacao;
     public $usuario_id;
+    public $nota_avaliacao;
+    public $count_avaliacoes;
 }
