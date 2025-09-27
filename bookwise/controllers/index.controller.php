@@ -1,7 +1,6 @@
 <?php
 
-$pesquisar = $_REQUEST['pesquisar'] ?? '';
-$livros = $database->query("select * from livros where titulo like :filtro", livro::class, ['filtro' => "%$pesquisar%"])->fetchAll();
+$livros = Livro::all( $_REQUEST['pesquisar'] ?? '');
 
 view('index', compact('livros'));
 //
