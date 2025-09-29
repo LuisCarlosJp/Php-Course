@@ -28,6 +28,7 @@
                             </ul>
                         </div>
                     <?php endif; ?>
+		    
                     <div class=" flex flex-col">
                         <input type="hidden" name="livro_id" value="<?= $livro->id ?>" />
                         <label class="text-stone-500 mb-1">Avaliação</label>
